@@ -1,18 +1,20 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; // <-- Import necessario
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [FontAwesomeModule],
+  imports: [
+    CommonModule,
+    FormsModule,          // <-- Aggiunto qui
+    FontAwesomeModule
+  ],
   templateUrl: './homepage.html',
-  styleUrls: ['./homepage.css'],
+  styleUrls: ['./homepage.css']
 })
 export class Homepage {
-   menuOpen = false;
-
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
-  }
+  showSearch = false;
+  searchText = '';
 }
