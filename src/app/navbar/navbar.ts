@@ -14,18 +14,18 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 export class Navbar {
   showSearch = false;
   searchText = '';
-    scrolled = false;
+  scrolled = false;
 
   constructor(private router: Router) {
     // Chiude automaticamente il search quando navighi
-    this.router.events.subscribe(event => {
+    this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.showSearch = false;
       }
     });
   }
 
-     @HostListener('window:scroll', [])
+  @HostListener('window:scroll', [])
   onWindowScroll() {
     // Semi-trasparente se scrollY > 0
     this.scrolled = window.scrollY > 0;
