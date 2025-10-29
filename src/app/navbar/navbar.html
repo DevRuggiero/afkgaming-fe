@@ -1,0 +1,85 @@
+<div class="relative flex items-center p-4 bg-black h-25">
+  <!-- Navbar normale -->
+  <div *ngIf="!showSearch">
+    <a routerLink="/">
+      <img src="images/logowithoutbg.png" alt="Logo" class="h-25 w-auto object-contain" />
+    </a>
+  </div>
+
+  <!-- Icona di ricerca al centro -->
+  <div *ngIf="!showSearch" class="absolute left-1/2 transform -translate-x-1/2">
+    <button (click)="showSearch = true" class="text-white text-2xl">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+  </div>
+  <!-- Icone a destra -->
+  <div *ngIf="!showSearch" class="absolute right-6 top-1/2 transform -translate-y-1/2 flex gap-x-6">
+    <button class="text-white text-2xl"><i class="fa-solid fa-user"></i></button>
+    <button class="text-white text-2xl"><i class="fa-solid fa-cart-shopping"></i></button>
+  </div>
+  <div
+    class="absolute inset-0 flex items-center justify-center z-50 p-4 transition-all duration-300"
+    [ngClass]="showSearch ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'"
+  >
+    <div class="relative w-full max-w-md">
+      <input
+        type="text"
+        [(ngModel)]="searchText"
+        placeholder=" Minecraft, Halo ..."
+        class="w-full p-4 pr-12 text-white rounded-md focus:outline-none bg-blue-500 transition-all duration-300"
+      />
+      <!-- Pulsante interno per cancellare il testo -->
+      <button
+        *ngIf="searchText"
+        (click)="searchText = ''"
+        class="absolute right-10 top-1/2 transform -translate-y-1/2 text-white text-xl"
+        aria-label="Cancella testo"
+      >
+        <i class="fa-solid fa-backspace"></i>
+      </button>
+      <!-- Pulsante per chiudere l'overlay -->
+      <button
+        (click)="showSearch = false"
+        class="absolute right-2 top-1/2 transform -translate-y-1/2 text-white text-2xl"
+        aria-label="Chiudi ricerca"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Div sotto la navbar con link -->
+<div class="bg-blue-500 w-full h-12 flex items-center justify-center">
+  <div class="flex gap-6">
+    <!-- PC -->
+    <a
+      routerLink="/pc"
+      routerLinkActive="border-b-2 border-cyan-500"
+      class="flex items-center gap-2 px-3 py-1 text-white transition-colors duration-200"
+    >
+      <img src="images/pclogo.png" alt="PC" class="h-7 object-contain" />
+      <span>PC</span>
+    </a>
+
+    <!-- PLAYSTATION -->
+    <a
+      routerLink="/playstation"
+      routerLinkActive="border-b-2 border-blue-600"
+      class="flex items-center gap-2 px-3 py-1 text-white transition-colors duration-200"
+    >
+      <img src="images/playlogowhite.png" alt="PlayStation" class="h-7 object-contain" />
+      <span>PLAYSTATION</span>
+    </a>
+
+    <!-- XBOX -->
+    <a
+      routerLink="/xbox"
+      routerLinkActive="border-b-2 border-green-600"
+      class="flex items-center gap-2 px-3 py-1 text-white transition-colors duration-200"
+    >
+      <img src="images/xboxlogo.png" alt="Xbox" class="h-7 object-contain" />
+      <span>XBOX</span>
+    </a>
+  </div>
+</div>
