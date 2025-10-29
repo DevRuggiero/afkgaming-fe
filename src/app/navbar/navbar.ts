@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router, NavigationStart } from '@angular/router';
@@ -14,6 +14,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 export class Navbar {
   showSearch = false;
   searchText = '';
+    scrolled = false;
 
   constructor(private router: Router) {
     // Chiude automaticamente il search quando navighi
@@ -22,5 +23,11 @@ export class Navbar {
         this.showSearch = false;
       }
     });
+  }
+
+     @HostListener('window:scroll', [])
+  onWindowScroll() {
+    // Semi-trasparente se scrollY > 0
+    this.scrolled = window.scrollY > 0;
   }
 }

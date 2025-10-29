@@ -1,4 +1,11 @@
-<div class="relative flex items-center p-4 bg-black h-25">
+<div
+  class="fixed top-0 left-0 w-full flex items-center p-4 z-50 transition-all duration-300"
+  [ngClass]="{
+    'bg-black': !scrolled,
+    'bg-black/70 backdrop-blur-md': scrolled
+  }"
+  style="height: 100px"
+>
   <!-- Navbar normale -->
   <div *ngIf="!showSearch">
     <a routerLink="/">
@@ -49,47 +56,47 @@
   </div>
 </div>
 
-<!-- Div sotto la navbar con link -->
-<div class="bg-blue-500 w-full h-12 flex items-center justify-center">
-  <div class="flex gap-3">
-    <!-- PC -->
-    <a
-      routerLink="/pc"
-      routerLinkActive="border-b-2 border-cyan-500"
-      class="flex items-center gap-2   text-white transition-colors duration-200"
-    >
-      <img src="images/pc.png" alt="PC" class="h-4 object-contain" />
-      <span>Pc</span>
-    </a>
-
-    <!-- PLAYSTATION -->
-    <a
-      routerLink="/playstation"
-      routerLinkActive="border-b-2 border-blue-600"
-      class="flex items-center gap-2   text-white transition-colors duration-200"
-    >
-      <img src="images/play.png" alt="PlayStation" class="h-4 object-contain" />
-      <span>PlayStation</span>
-    </a>
-
-    <!-- XBOX -->
-    <a
-      routerLink="/xbox"
-      routerLinkActive="border-b-2 border-green-600"
-      class="flex items-center gap-2 text-white transition-colors duration-200"
-    >
-      <img src="images/xbox.png" alt="Xbox" class="h-4 object-contain" />
-      <span>Xbox</span>
-    </a>
-
-        <!-- SWITCH -->
-    <a
-      routerLink="/switch"
-      routerLinkActive="border-b-2 border-green-600"
-      class="flex items-center gap-2  text-white transition-colors duration-200"
-    >
-      <img src="images/switch.png" alt="Xbox" class="h-4 object-contain" />
-      <span>Switch</span>
-    </a>
+<div style="margin-top: 100px">
+  <!-- uguale all'altezza navbar -->
+  <!-- Div dei link -->
+  <div class="bg-blue-500 w-full h-12 flex items-center justify-center">
+    <div class="flex gap-3">
+      <!-- PC -->
+      <a
+        routerLink="/pc"
+        routerLinkActive="border-b-2 border-cyan-500"
+        class="flex items-center gap-2 text-white transition-colors duration-200"
+      >
+        <img src="images/pc.png" alt="PC" class="h-4 object-contain" />
+        <span>Pc</span>
+      </a>
+      <!-- PLAYSTATION -->
+      <a
+        routerLink="/playstation"
+        routerLinkActive="border-b-2 border-blue-600"
+        class="flex items-center gap-2 text-white transition-colors duration-200"
+      >
+        <img src="images/play.png" alt="PlayStation" class="h-4 object-contain" />
+        <span>PlayStation</span>
+      </a>
+      <!-- XBOX -->
+      <a
+        routerLink="/xbox"
+        routerLinkActive="border-b-2 border-green-600"
+        class="flex items-center gap-2 text-white transition-colors duration-200"
+      >
+        <img src="images/xbox.png" alt="Xbox" class="h-4 object-contain" />
+        <span>Xbox</span>
+      </a>
+      <!-- SWITCH -->
+      <a
+        routerLink="/switch"
+        routerLinkActive="border-b-2 border-red-600"
+        class="flex items-center gap-2 text-white transition-colors duration-200"
+      >
+        <img src="images/switch.png" alt="Switch" class="h-4 object-contain" />
+        <span>Switch</span>
+      </a>
+    </div>
   </div>
 </div>
