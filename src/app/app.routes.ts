@@ -10,5 +10,5 @@ export const routes: Routes = [
   { path: 'pc', component: Pc }, // /pc
   { path: 'playstation', component: Playstation }, // /playstation
   { path: 'xbox', component: Xbox }, // /xbox
-  {path: 'switch', component: Switch } //switch
+  { path: 'switch', component: Switch } //switch
 ];
