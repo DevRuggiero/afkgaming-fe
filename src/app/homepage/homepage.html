@@ -1,6 +1,6 @@
 <div class="bg-gray-900">
   <!-- Hero -->
-  <section class="relative min-h-[180px]">
+  <section>
     <a
       routerLink="/"
       class="relative block overflow-hidden group [clip-path:polygon(0_0,100%_0,100%_100%,0%_90%)]"
@@ -18,7 +18,7 @@
       <div class="absolute top-4 right-1 text-right text-white space-y-1 text-xs">
         <div class="text-xs">Halo: Campaign Evolved</div>
         <div class="inline-flex items-center space-x-2 gap-2">
-          <span class="text-sm bg-blue-600 text-white px-2 py-1 rounded">-20%</span>
+          <span class="text-sm bg-blue-500 text-white px-2 py-1 rounded">-20%</span>
           <span class="text-lg font-semibold">56.90 €</span>
         </div>
       </div>
@@ -45,22 +45,19 @@
   </div>
 
   <!-- Section delle card -->
-  <section class="relative min-h-[430px]">
+  <section class="relative mb-5">
     <div class="grid grid-cols-1 gap-7 place-items-center">
       <!-- CARD 1 -->
       <div class="group w-72">
         <a routerLink="/prodotto/halo" class="relative block overflow-hidden rounded-xl shadow-lg">
           <img src="images/halo-evolved.jpg" alt="Halo" class="w-full h-auto" />
           <span
-            class="absolute bottom-2 right-2 bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded"
+            class="absolute bottom-2 right-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded"
           >
             -20%
           </span>
         </a>
-        <div
-          class="flex items-center justify-between text-white text-sm"
-          style="margin-top: 10px !important"
-        >
+        <div class="flex items-center justify-between text-white text-sm" style="margin-top: 10px">
           <span>Halo: Campaign Evolved</span>
           <span class="font-semibold text-white">56.90 €</span>
         </div>
@@ -71,7 +68,7 @@
         <a routerLink="/prodotto/mario" class="relative block overflow-hidden rounded-xl shadow-lg">
           <img src="images/SuperMarioOdissey.jpg" alt="Mario" class="w-full h-auto" />
           <span
-            class="absolute bottom-2 right-2 bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded"
+            class="absolute bottom-2 right-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded"
             >-10%</span
           >
         </a>
@@ -87,7 +84,7 @@
   </section>
 
   <!-- Sezione valori del sito con icone Font Awesome e spazio sopra -->
-  <div class="bg-blue-500 w-full h-16 flex items-center justify-center">
+  <div class="bg-blue-900 w-full h-16 flex items-center justify-center">
     <div class="flex gap-3 items-center">
       <!-- SICURO con lucchetto -->
       <div class="flex items-center gap-2 text-white text-ms">
@@ -114,4 +111,40 @@
       </div>
     </div>
   </div>
+
+  <!-- Sezione Recensioni Demo -->
+  <section class="bg-gray-900 py-5">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+      <!-- Valutazione media -->
+      <h2 class="text-2xl font-semibold text-white mb-2">Recensioni dei nostri clienti</h2>
+
+      <div class="flex items-center justify-center !mb-4">
+        <span class="ml-2 text-white font-medium"> (5.0 su 5 basato su 134 recensioni) </span>
+      </div>
+
+      <!-- Griglia recensioni -->
+      <div class="grid gap-6 md:grid-cols-3 mt-4">
+        <div
+          *ngFor="let review of reviews"
+          class="bg-white p-6 rounded-2xl shadow-md text-left hover:shadow-lg transition-shadow"
+        >
+          <!-- Header recensione -->
+          <div class="flex items-center gap-3 mb-3">
+            <img [src]="review.img" alt="{{ review.nome }}" class="w-10 h-10 rounded-full" />
+            <div class="flex items-center gap-2">
+              <h3 class="font-semibold text-black">{{ review.nome }}</h3>
+              <div class="flex gap-1">
+                <i *ngFor="let star of stars" class="fas fa-star text-yellow-400 text-sm"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testo recensione -->
+          <p class="text-black text-sm leading-relaxed p-2">
+            {{ review.testo }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
