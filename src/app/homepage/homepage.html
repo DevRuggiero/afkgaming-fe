@@ -5,35 +5,36 @@
       routerLink="/"
       class="relative block overflow-hidden group [clip-path:polygon(0_0,100%_0,100%_100%,0%_90%)]"
     >
-      <img
-        src="images/halo-evolved.jpg"
-        alt="Prodotto"
-        class="w-full h-auto transition-transform duration-500 group-hover:scale-105"
-      />
+      <img src="images/halo-evolved.jpg" alt="Prodotto" class="w-full h-auto" />
       <div
         class="absolute inset-0 pointer-events-none bg-[linear-gradient(to_top,rgba(0,0,0,0.6),transparent_40%),linear-gradient(to_right,rgba(0,0,0,0.6),transparent_40%),linear-gradient(to_bottom,rgba(0,0,0,0.6),transparent_40%)]"
       ></div>
 
-      <!-- Box testo in alto a destra -->
-      <div class="absolute top-4 right-1 text-right text-white space-y-1 text-xs">
-        <div class="text-xs">Halo: Campaign Evolved</div>
-        <div class="inline-flex items-center space-x-2 gap-2">
-          <span class="text-sm bg-blue-500 text-white px-2 py-1 rounded">-20%</span>
-          <span class="text-lg font-semibold">56.90 €</span>
+      <div
+        class="absolute top-4 right-1 md:top-6 md:right-6 text-right text-white space-y-1 md:space-y-2 text-xs md:text-lg bg-transparent md:bg-gray-900 rounded-none md:rounded-2xl md:p-4 md:shadow-lg"
+      >
+        <div class="text-xs md:text-xl font-medium">Halo: Campaign Evolved</div>
+
+        <div class="inline-flex md:flex items-center justify-end gap-2 md:gap-3">
+          <span class="text-lg md:text-3xl font-bold md:mr-3">56.90 €</span>
+          <span
+            class="text-xs md:text-xl bg-blue-500 px-2 md:px-3 py-1 rounded md:rounded-lg md:mt-5"
+            >-20%</span
+          >
         </div>
       </div>
     </a>
   </section>
 
-  <div class="h-16 flex items-center justify-start" style="padding-left: 10px">
+  <div class="h-16 flex items-center justify-start md:ml-25" style="padding-left: 10px">
     <a
       routerLink="/piu-venduti"
-      class="inline-flex items-center gap-2 text-lg font-semibold text-white"
+      class="inline-flex items-center gap-2 text-lg md:text-2xl font-semibold text-white"
     >
       <span>I PIÙ VENDUTI</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="w-5 h-5"
+        class="w-5 h-5 md:w-10 md:h-7"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -45,107 +46,154 @@
   </div>
 
   <!-- Section delle card -->
-  <section class="relative mb-5">
-    <div class="grid grid-cols-1 gap-7 place-items-center">
+  <section class="relative mb-5 md:mt-10">
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 gap-7 md:gap-10 md:px-10 place-items-center md:place-items-stretch"
+    >
       <!-- CARD 1 -->
-      <div class="group w-72">
-        <a routerLink="/prodotto/halo" class="relative block overflow-hidden rounded-xl shadow-lg">
-          <img src="images/halo-evolved.jpg" alt="Halo" class="w-full h-auto" />
-          <span
-            class="absolute bottom-2 right-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded"
-          >
-            -20%
-          </span>
+      <div class="group w-72 md:w-full">
+        <a routerLink="#" class="relative block overflow-hidden rounded-xl shadow-lg bg-gray-900">
+          <div class="relative aspect-[16/9] md:aspect-[16/9] w-full">
+            <img
+              src="images/cyberpunk.jpg"
+              alt="Halo"
+              class="w-full h-full object-cover object-center transition-all duration-500 group-hover:brightness-50"
+            />
+
+            <!-- Overlay testo centrale -->
+            <div
+              class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            >
+              <span class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg text-xl">
+                ACQUISTA ORA
+              </span>
+            </div>
+
+            <!-- Badge sconto -->
+            <span
+              class="absolute bottom-2 right-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded md:text-2xl"
+            >
+              -20%
+            </span>
+          </div>
         </a>
-        <div class="flex items-center justify-between text-white text-sm" style="margin-top: 10px">
-          <span>Halo: Campaign Evolved</span>
-          <span class="font-semibold text-white">56.90 €</span>
+        <div class="flex items-center justify-between text-white text-sm mt-2 md:mt-4">
+          <span class="md:text-2xl">Cyberpunk: Ultimate Edition</span>
+          <span class="font-semibold md:text-2xl">60.80 €</span>
         </div>
       </div>
 
       <!-- CARD 2 -->
-      <div class="group w-72">
-        <a routerLink="/prodotto/mario" class="relative block overflow-hidden rounded-xl shadow-lg">
-          <img src="images/SuperMarioOdissey.jpg" alt="Mario" class="w-full h-auto" />
-          <span
-            class="absolute bottom-2 right-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded"
-            >-10%</span
-          >
+      <div class="group w-72 md:w-full">
+        <a routerLink="#" class="relative block overflow-hidden rounded-xl shadow-lg bg-gray-900">
+          <div class="relative aspect-[16/9] md:aspect-[16/9] w-full">
+            <img
+              src="images/SuperMarioOdissey.jpg"
+              alt="Mario"
+              class="w-full h-full object-cover object-center transition-all duration-500 group-hover:brightness-50"
+            />
+
+            <!-- Overlay testo centrale -->
+            <div
+              class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            >
+              <span class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg text-xl">
+                ACQUISTA ORA
+              </span>
+            </div>
+
+            <!-- Badge sconto -->
+            <span
+              class="absolute bottom-2 right-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded md:text-2xl"
+            >
+              -10%
+            </span>
+          </div>
         </a>
-        <div
-          class="flex items-center justify-between text-white text-sm"
-          style="margin-top: 10px !important"
-        >
-          <span>Super Mario Odyssey</span>
-          <span class="font-semibold white">49.90 €</span>
+        <div class="flex items-center justify-between text-white text-sm mt-2 md:mt-4">
+          <span class="md:text-2xl">Super Mario Odyssey</span>
+          <span class="font-semibold md:text-2xl">49.90 €</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Sezione valori del sito con icone Font Awesome e spazio sopra -->
-  <div class="bg-blue-900 w-full h-16 flex items-center justify-center">
-    <div class="flex gap-3 items-center">
+  <!-- Sezione valori del sito con icone Font Awesome -->
+  <div class="bg-blue-900 w-full h-16 md:h-24 flex items-center justify-center md:mt-20">
+    <div class="flex gap-3 items-center md:gap-16">
       <!-- SICURO con lucchetto -->
-      <div class="flex items-center gap-2 text-white text-ms">
-        <i class="fas fa-lock w-5 h-5"></i>
+      <div class="flex items-center gap-2 md:gap-3 text-white text-sm md:text-2xl">
+        <i class="fas fa-lock text-base md:text-3xl"></i>
         <span>SICURO</span>
       </div>
 
       <!-- Separatore -->
-      <span class="h-9 border-l border-gray-900"></span>
+      <span class="h-9 md:h-12 border-l border-gray-800"></span>
 
       <!-- AFFIDABILE -->
-      <div class="flex items-center gap-2 text-white text-ms">
-        <i class="fas fa-check w-5 h-5"></i>
+      <div class="flex items-center gap-2 md:gap-3 text-white text-sm md:text-2xl">
+        <i class="fas fa-check text-base md:text-3xl"></i>
         <span>AFFIDABILE</span>
       </div>
 
       <!-- Separatore -->
-      <span class="h-9 border-l border-gray-900"></span>
+      <span class="h-9 md:h-12 border-l border-gray-800"></span>
 
       <!-- VELOCE -->
-      <div class="flex items-center gap-2 text-white text-ms">
-        <i class="fas fa-bolt w-5 h-5"></i>
+      <div class="flex items-center gap-2 md:gap-3 text-white text-sm md:text-2xl">
+        <i class="fas fa-bolt text-base md:text-3xl"></i>
         <span>VELOCE</span>
       </div>
     </div>
   </div>
 
   <!-- Sezione Recensioni Demo -->
-  <section class="bg-gray-900 py-5">
-    <div class="max-w-5xl mx-auto px-4 text-center">
-      <!-- Valutazione media -->
-      <h2 class="text-2xl font-semibold text-white mb-2">Recensioni dei nostri clienti</h2>
+  <section class="bg-gray-900 py-5 md:py-12">
+    <div class="max-w-5xl mx-auto px-4 md:px-8 text-center">
+      <!-- Titolo -->
+      <h2 class="text-2xl md:text-4xl font-semibold text-white mb-2 md:mb-4">
+        Recensioni dei nostri clienti
+      </h2>
 
-      <div class="flex items-center justify-center !mb-4">
-        <span class="ml-2 text-white font-medium"> (5.0 su 5 basato su 134 recensioni) </span>
+      <!-- Valutazione media -->
+      <div class="flex items-center justify-center mb-4 md:mb-6">
+        <span class="ml-2 text-white font-medium text-sm md:text-lg">
+          (5.0 su 5 basato su 134 recensioni)
+        </span>
       </div>
 
       <!-- Griglia recensioni -->
-      <div class="grid gap-6 md:grid-cols-3 mt-4">
+      <div class="grid gap-6 md:gap-10 md:grid-cols-3 mt-4 md:mt-8">
         <div
           *ngFor="let review of reviews"
-          class="bg-white p-6 rounded-2xl shadow-md text-left hover:shadow-lg transition-shadow"
+          class="bg-white p-6 md:p-8 rounded-2xl shadow-md text-left hover:shadow-xl transition-shadow"
         >
           <!-- Header recensione -->
-          <div class="flex items-center gap-3 mb-3">
-            <img [src]="review.img" alt="{{ review.nome }}" class="w-10 h-10 rounded-full" />
-            <div class="flex items-center gap-2">
-              <h3 class="font-semibold text-black">{{ review.nome }}</h3>
-              <div class="flex gap-1">
-                <i *ngFor="let star of stars" class="fas fa-star text-yellow-400 text-sm"></i>
+          <div class="flex items-center gap-3 md:gap-4 mb-3 md:mb-5">
+            <img
+              [src]="review.img"
+              alt="{{ review.nome }}"
+              class="w-10 h-10 md:w-14 md:h-14 rounded-full"
+            />
+            <div class="flex flex-col">
+              <h3 class="font-semibold text-black text-base md:text-lg">{{ review.nome }}</h3>
+              <div class="flex gap-1 md:gap-1.5">
+                <i
+                  *ngFor="let star of stars"
+                  class="fas fa-star text-yellow-400 text-xs md:text-base"
+                ></i>
               </div>
             </div>
           </div>
 
           <!-- Testo recensione -->
-          <p class="text-black text-sm leading-relaxed p-2">
+          <p class="text-black text-sm md:text-base leading-relaxed md:leading-loose p-2 md:p-0">
             {{ review.testo }}
           </p>
         </div>
       </div>
     </div>
   </section>
+
   <app-footer></app-footer>
 </div>

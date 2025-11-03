@@ -1,33 +1,32 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router'; // ✅ Importa RouterModule
 import { Footer } from '../footer/footer';
 
 @Component({
   selector: 'app-homepage',
-  imports: [CommonModule, Footer],
+  imports: [CommonModule, RouterModule, Footer], // ✅ aggiunto RouterModule
   templateUrl: './homepage.html',
   styleUrl: './homepage.css',
 })
 export class Homepage {
-
   stars = Array(5).fill(0); // 5 stelle
+
   reviews = [
     {
       nome: 'Luca R.',
       img: 'https://i.pravatar.cc/60?img=1',
-      testo: 'Servizio impeccabile! Tutto è stato rapido e sicuro. Consigliatissimo.'
+      testo: 'Servizio impeccabile! Tutto è stato rapido e sicuro. Consigliatissimo.',
     },
     {
       nome: 'Giulia M.',
       img: 'https://i.pravatar.cc/60?img=2',
-      testo: 'Esperienza fantastica! Il sito è veloce e affidabile, tornerò sicuramente.'
+      testo: 'Esperienza fantastica! Il sito è veloce e affidabile, tornerò sicuramente.',
     },
     {
       nome: 'Marco D.',
       img: 'https://i.pravatar.cc/60?img=3',
-      testo: 'Ottimo servizio clienti e consegna super rapida. Cinque stelle!'
-    }
+      testo: 'Ottimo servizio clienti e consegna super rapida. Cinque stelle!',
+    },
   ];
 }
-
-
