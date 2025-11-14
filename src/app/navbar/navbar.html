@@ -1,10 +1,8 @@
-<div
-  class="fixed top-0 left-0 w-full flex items-center p-4 z-50 transition-all duration-300 h-[100px] md:h-[120px]"
+<div class="fixed top-0 left-0 w-full flex items-center p-4 z-50 transition-all duration-300 h-[100px] md:h-[120px]"
   [ngClass]="{
     'bg-gray-900': !scrolled,
     'bg-black/70 backdrop-blur-md': scrolled
-  }"
->
+  }">
   <!-- Navbar normale -->
   <div *ngIf="!showSearch">
     <a routerLink="/">
@@ -25,36 +23,42 @@
       <i class="fa-solid fa-cart-shopping"></i>
     </button>
   </div>
-  <div
-    class="absolute inset-0 flex items-center justify-center z-50 p-4 transition-all duration-300"
-    [ngClass]="showSearch ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'"
-  >
+  <div class="absolute inset-0 flex items-center justify-center z-50 p-4 transition-all duration-300"
+    [ngClass]="showSearch ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'">
     <div class="relative w-full max-w-md">
-      <input
-        type="text"
-        [(ngModel)]="searchText"
-        placeholder=" Minecraft, Halo ..."
+
+      <!-- Input di ricerca -->
+      <input type="text" [(ngModel)]="searchText" placeholder=" Minecraft, Halo ..."
         class="w-full p-4 pr-12 text-white rounded-md focus:outline-none bg-blue-500 transition-all duration-300"
-      />
+        (keydown.enter)="searchProducts()" />
+
       <!-- Pulsante interno per cancellare il testo -->
-      <button
-        *ngIf="searchText"
-        (click)="searchText = ''"
-        class="absolute right-10 top-1/2 transform -translate-y-1/2 text-white text-xl"
-        aria-label="Cancella testo"
-      >
+      <button *ngIf="searchText" (click)="searchText = ''"
+        class="absolute right-10 top-1/2 transform -translate-y-1/2 text-white text-xl" aria-label="Cancella testo">
         <i class="fa-solid fa-backspace"></i>
       </button>
+
       <!-- Pulsante per chiudere l'overlay -->
-      <button
-        (click)="showSearch = false"
+      <button (click)="showSearch = false"
         class="absolute right-2 top-1/2 transform -translate-y-1/2 text-white text-2xl cursor-pointer"
-        aria-label="Chiudi ricerca"
-      >
+        aria-label="Chiudi ricerca">
         <i class="fa-solid fa-xmark"></i>
       </button>
+
+      <!-- Lista risultati live -->
+      <div *ngIf="filteredProducts.length > 0"
+        class="absolute top-full mt-2 w-full bg-gray-800 rounded-md shadow-lg max-h-80 overflow-y-auto z-50">
+        <div *ngFor="let product of filteredProducts" (click)="goToProduct(product.id)"
+          class="flex items-center gap-3 p-2 hover:bg-blue-700 cursor-pointer transition-colors">
+          <img [src]="product.img" alt="{{ product.name }}" class="w-10 h-10 object-cover rounded" />
+          <span class="text-white">{{ product.name }}</span>
+        </div>
+      </div>
+
     </div>
   </div>
+
+
 </div>
 
 <div class="mt-[100px] md:mt-[120px]">
@@ -63,38 +67,26 @@
   <div class="bg-blue-900 w-full h-12 md:h-16 flex items-center justify-center">
     <div class="flex gap-3 md:gap-7">
       <!-- PC -->
-      <a
-        routerLink="/pc"
-        routerLinkActive="border-b-2 border-cyan-500"
-        class="flex items-center gap-2 text-white transition-colors duration-200"
-      >
+      <a routerLink="/pc" routerLinkActive="border-b-2 border-cyan-500"
+        class="flex items-center gap-2 text-white transition-colors duration-200">
         <img src="images/pc.png" alt="PC" class="h-4 md:h-6 object-contain" />
         <span>Pc</span>
       </a>
       <!-- PLAYSTATION -->
-      <a
-        routerLink="/playstation"
-        routerLinkActive="border-b-2 border-blue-500"
-        class="flex items-center gap-2 text-white transition-colors duration-200"
-      >
+      <a routerLink="/playstation" routerLinkActive="border-b-2 border-blue-500"
+        class="flex items-center gap-2 text-white transition-colors duration-200">
         <img src="images/play.png" alt="PlayStation" class="h-4 md:h-6 object-contain" />
         <span>PlayStation</span>
       </a>
       <!-- XBOX -->
-      <a
-        routerLink="/xbox"
-        routerLinkActive="border-b-2 border-green-600"
-        class="flex items-center gap-2 text-white transition-colors duration-200"
-      >
+      <a routerLink="/xbox" routerLinkActive="border-b-2 border-green-600"
+        class="flex items-center gap-2 text-white transition-colors duration-200">
         <img src="images/xbox.png" alt="Xbox" class="h-4 md:h-6 object-contain" />
         <span>Xbox</span>
       </a>
       <!-- SWITCH -->
-      <a
-        routerLink="/switch"
-        routerLinkActive="border-b-2 border-red-600"
-        class="flex items-center gap-2 text-white transition-colors duration-200"
-      >
+      <a routerLink="/switch" routerLinkActive="border-b-2 border-red-600"
+        class="flex items-center gap-2 text-white transition-colors duration-200">
         <img src="images/switch.png" alt="Switch" class="h-4 md:h-6 object-contain" />
         <span>Switch</span>
       </a>
