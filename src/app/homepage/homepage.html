@@ -1,45 +1,29 @@
 <div class="bg-gray-900">
   <!-- Hero -->
   <section>
-    <a
-      routerLink="/"
-      class="relative block overflow-hidden group [clip-path:polygon(0_0,100%_0,100%_100%,0%_90%)]"
-    >
+    <a routerLink="/" class="relative block overflow-hidden group [clip-path:polygon(0_0,100%_0,100%_100%,0%_90%)]">
       <img src="images/halo-evolved.jpg" alt="Prodotto" class="w-full h-auto" />
       <div
-        class="absolute inset-0 pointer-events-none bg-[linear-gradient(to_top,rgba(0,0,0,0.6),transparent_40%),linear-gradient(to_right,rgba(0,0,0,0.6),transparent_40%),linear-gradient(to_bottom,rgba(0,0,0,0.6),transparent_40%)]"
-      ></div>
+        class="absolute inset-0 pointer-events-none bg-[linear-gradient(to_top,rgba(0,0,0,0.6),transparent_40%),linear-gradient(to_right,rgba(0,0,0,0.6),transparent_40%),linear-gradient(to_bottom,rgba(0,0,0,0.6),transparent_40%)]">
+      </div>
 
       <div
-        class="absolute top-4 right-1 md:top-6 md:right-6 text-right text-white space-y-1 md:space-y-2 text-xs md:text-lg bg-transparent md:bg-gray-900 rounded-none md:rounded-2xl md:p-4 md:shadow-lg"
-      >
+        class="absolute top-4 right-1 md:top-6 md:right-6 text-right text-white space-y-1 md:space-y-2 text-xs md:text-lg bg-transparent md:bg-gray-900 rounded-none md:rounded-2xl md:p-4 md:shadow-lg">
         <div class="text-xs md:text-xl font-medium">Halo: Campaign Evolved</div>
 
         <div class="inline-flex md:flex items-center justify-end gap-2 md:gap-3">
           <span class="text-lg md:text-3xl font-bold md:mr-3">56.90 €</span>
-          <span
-            class="text-xs md:text-xl bg-blue-500 px-2 md:px-3 py-1 rounded md:rounded-lg md:mt-5"
-            >-20%</span
-          >
+          <span class="text-xs md:text-xl bg-blue-500 px-2 md:px-3 py-1 rounded md:rounded-lg md:mt-5">-20%</span>
         </div>
       </div>
     </a>
   </section>
 
   <div class="h-16 flex items-center justify-start md:ml-25" style="padding-left: 10px">
-    <a
-      routerLink="/piu-venduti"
-      class="inline-flex items-center gap-2 text-lg md:text-2xl font-semibold text-white"
-    >
+    <a routerLink="/piu-venduti" class="inline-flex items-center gap-2 text-lg md:text-2xl font-semibold text-white">
       <span>I PIÙ VENDUTI</span>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="w-5 h-5 md:w-10 md:h-7"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        stroke-width="2"
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-10 md:h-7" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
       </svg>
     </a>
@@ -47,23 +31,18 @@
 
   <!-- Section delle card -->
   <section class="relative mb-5 md:mt-10">
-    <div
-      class="grid grid-cols-1 md:grid-cols-2 gap-7 md:gap-10 md:px-10 place-items-center md:place-items-stretch"
-    >
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-7 md:gap-10 md:px-10 place-items-center md:place-items-stretch">
       <!-- CARD 1 -->
       <div class="group w-72 md:w-full">
-        <a routerLink="#" class="relative block overflow-hidden rounded-xl shadow-lg bg-gray-900">
+        <a [routerLink]="['/product', 'cyberpunk2077']"
+          class="relative block overflow-hidden rounded-xl shadow-lg bg-gray-900">
           <div class="relative aspect-[16/9] md:aspect-[16/9] w-full">
-            <img
-              src="images/cyberpunk.jpg"
-              alt="Halo"
-              class="w-full h-full object-cover object-center transition-all duration-500 group-hover:brightness-50"
-            />
+            <img src="images/cyberpunk.jpg" alt="Halo"
+              class="w-full h-full object-cover object-center transition-all duration-500 group-hover:brightness-50" />
 
             <!-- Overlay testo centrale -->
             <div
-              class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-            >
+              class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
               <span class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg text-xl">
                 ACQUISTA ORA
               </span>
@@ -71,8 +50,7 @@
 
             <!-- Badge sconto -->
             <span
-              class="absolute bottom-2 right-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded md:text-2xl"
-            >
+              class="absolute bottom-2 right-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded md:text-2xl">
               -20%
             </span>
           </div>
@@ -85,18 +63,15 @@
 
       <!-- CARD 2 -->
       <div class="group w-72 md:w-full">
-        <a routerLink="#" class="relative block overflow-hidden rounded-xl shadow-lg bg-gray-900">
+        <a [routerLink]="['/product', 'superMarioOdissey']"
+          class="relative block overflow-hidden rounded-xl shadow-lg bg-gray-900">
           <div class="relative aspect-[16/9] md:aspect-[16/9] w-full">
-            <img
-              src="images/SuperMarioOdissey.jpg"
-              alt="Mario"
-              class="w-full h-full object-cover object-center transition-all duration-500 group-hover:brightness-50"
-            />
+            <img src="images/SuperMarioOdissey.jpg" alt="Mario"
+              class="w-full h-full object-cover object-center transition-all duration-500 group-hover:brightness-50" />
 
             <!-- Overlay testo centrale -->
             <div
-              class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-            >
+              class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
               <span class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg text-xl">
                 ACQUISTA ORA
               </span>
@@ -104,8 +79,7 @@
 
             <!-- Badge sconto -->
             <span
-              class="absolute bottom-2 right-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded md:text-2xl"
-            >
+              class="absolute bottom-2 right-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded md:text-2xl">
               -10%
             </span>
           </div>
@@ -164,24 +138,15 @@
 
       <!-- Griglia recensioni -->
       <div class="grid gap-6 md:gap-10 md:grid-cols-3 mt-4 md:mt-8">
-        <div
-          *ngFor="let review of reviews"
-          class="bg-white p-6 md:p-8 rounded-2xl shadow-md text-left hover:shadow-xl transition-shadow"
-        >
+        <div *ngFor="let review of reviews"
+          class="bg-white p-6 md:p-8 rounded-2xl shadow-md text-left hover:shadow-xl transition-shadow">
           <!-- Header recensione -->
           <div class="flex items-center gap-3 md:gap-4 mb-3 md:mb-5">
-            <img
-              [src]="review.img"
-              alt="{{ review.nome }}"
-              class="w-10 h-10 md:w-14 md:h-14 rounded-full"
-            />
+            <img [src]="review.img" alt="{{ review.nome }}" class="w-10 h-10 md:w-14 md:h-14 rounded-full" />
             <div class="flex flex-col">
               <h3 class="font-semibold text-black text-base md:text-lg">{{ review.nome }}</h3>
               <div class="flex gap-1 md:gap-1.5">
-                <i
-                  *ngFor="let star of stars"
-                  class="fas fa-star text-yellow-400 text-xs md:text-base"
-                ></i>
+                <i *ngFor="let star of stars" class="fas fa-star text-yellow-400 text-xs md:text-base"></i>
               </div>
             </div>
           </div>
