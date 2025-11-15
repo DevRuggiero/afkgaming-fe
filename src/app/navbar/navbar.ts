@@ -1,30 +1,48 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CartService } from '../services/cart';
+import { Cartmodal } from '../shop/cartmodal/cartmodal';
+import { Subscription } from 'rxjs';
+import { ProductService } from '../services/product';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, FontAwesomeModule],
+  imports: [CommonModule, FormsModule, RouterModule, FontAwesomeModule, Cartmodal],
   templateUrl: './navbar.html',
   styleUrls: ['./navbar.css'],
 })
-export class Navbar {
+export class Navbar implements OnInit, OnDestroy {
   showSearch = false;
   _searchText = '';
   scrolled = false;
+  showCart = false;
+  cartCount = 0;
+
+  private cartSub!: Subscription;
 
   filteredProducts: any[] = [];
 
   products = [
     { id: 'cyberpunk2077', name: 'Cyberpunk 2077', img: 'images/cyberpunk.jpg' },
     { id: 'superMarioOdissey', name: 'Super Mario Odyssey', img: 'images/SuperMarioOdissey.jpg' },
-    { id: 'haloInfinite', name: 'Halo Infinite', img: 'images/halo-evolved.jpg' },
+    { id: 'haloInfinite', name: 'Halo: Campaign Evolved', img: 'images/halo-evolved.jpg' },
   ];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, public cart: CartService, private productService: ProductService) { }
+
+  ngOnInit() {
+    this.cartSub = this.cart.items$.subscribe(items => {
+      this.cartCount = items.length;
+    });
+  }
+
+  ngOnDestroy() {
+    this.cartSub.unsubscribe();
+  }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -42,37 +60,38 @@ export class Navbar {
 
   updateFilteredProducts() {
     const query = this._searchText.trim().toLowerCase();
-    if (!query) {
-      this.filteredProducts = [];
-      return;
-    }
-
-    this.filteredProducts = this.products.filter(p =>
-      p.name.toLowerCase().includes(query)
-    );
+    this.filteredProducts = query
+      ? this.products.filter(p => p.name.toLowerCase().includes(query))
+      : [];
   }
 
   searchProducts() {
-    if (this.filteredProducts.length === 0) return;
+    const allProducts = Object.entries(this.productService.getProducts())
+      .map(([id, product]) => ({ id, ...product }));
 
-    // Prendi il primo prodotto dalla lista filtrata
-    const firstProduct = this.filteredProducts[0];
+    const firstProduct = allProducts.find(p =>
+      p.name.toLowerCase().includes(this.searchText.toLowerCase()) // <--- usa searchText
+    );
 
-    // Naviga alla sua pagina
-    this.router.navigate(['/product', firstProduct.id]);
+    if (firstProduct) {
+      this.router.navigate(['/product', firstProduct.id]);
+      this.closeSearch();
+    }
+  }
 
-    // Chiudi overlay e resetta input
+
+  goToProduct(productId: string) {
+    this.router.navigate(['/product', productId]);
+    this.closeSearch();
+  }
+
+  closeSearch() {
     this.showSearch = false;
     this._searchText = '';
     this.filteredProducts = [];
   }
 
-
-  // 🔹 NUOVO METODO
-  goToProduct(productId: string) {
-    this.router.navigate(['/product', productId]);
-    this.showSearch = false;
-    this._searchText = '';
-    this.filteredProducts = [];
+  toggleCart() {
+    this.showCart = !this.showCart;
   }
 }

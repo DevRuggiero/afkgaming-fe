@@ -1,18 +1,17 @@
 import { Routes } from '@angular/router';
-import { Pc } from './sections/pc/pc';
-import { Playstation } from './sections/playstation/playstation';
-import { Xbox } from './sections/xbox/xbox';
 import { Homepage } from './homepage/homepage';
-import { Switch } from './sections/switch/switch';
 import { Productpage } from './sections/productpage/productpage';
+import { Login } from './access/login/login';
+import { Register } from './access/register/register';
+import { AuthGuard } from './guards/auth-guard';
+import { Checkout } from './shop/checkout/checkout';
+import { Category } from './sections/category/category';
 
 export const routes: Routes = [
-  { path: '', component: Homepage },       // /
-  { path: 'pc', component: Pc },           // /pc
-  { path: 'playstation', component: Playstation }, // /playstation
-  { path: 'xbox', component: Xbox },       // /xbox
-  { path: 'switch', component: Switch },   // /switch
-
-  // 🔥 ROUTE UNICA PER TUTTI I PRODOTTI
+  { path: '', component: Homepage },
+  { path: 'login', component: Login },
+  { path: 'category/:platform', component: Category },
+  { path: 'register', component: Register },
+  { path: 'checkout', component: Checkout, canActivate: [AuthGuard] },
   { path: 'product/:id', component: Productpage }
 ];

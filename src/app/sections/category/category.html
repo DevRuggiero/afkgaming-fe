@@ -1,0 +1,36 @@
+<div class="min-h-screen bg-gray-900 py-10 px-5 md:px-10">
+  <h1 class="text-center text-white text-3xl md:text-5xl font-bold mb-10">
+    {{ selectedPlatform | titlecase }}
+  </h1>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-10 place-items-center md:place-items-stretch">
+    <div *ngFor="let product of filteredProducts" class="group w-72 md:w-full">
+      <a [routerLink]="['/product', product.id]"
+        class="relative block overflow-hidden rounded-xl shadow-lg bg-gray-900">
+        <div class="relative aspect-[16/9] md:aspect-[16/9] w-full">
+          <img [src]="product.img" [alt]="product.name"
+            class="w-full h-full object-cover object-center transition-all duration-500 group-hover:brightness-50" />
+          <div
+            class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+            <span class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg text-xl">
+              ACQUISTA ORA
+            </span>
+          </div>
+          <span
+            class="absolute bottom-2 right-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded md:text-2xl">
+            {{ product.discount }}
+          </span>
+        </div>
+      </a>
+      <div class="flex items-center justify-between text-white text-sm mt-2 md:mt-4">
+        <span class="md:text-2xl">{{ product.name }}</span>
+        <span class="font-semibold md:text-2xl">{{ product.price }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Messaggio se non ci sono prodotti -->
+  <div *ngIf="filteredProducts.length === 0" class="text-white text-center mt-10 text-xl">
+    Nessun prodotto disponibile per questa piattaforma.
+  </div>
+</div>

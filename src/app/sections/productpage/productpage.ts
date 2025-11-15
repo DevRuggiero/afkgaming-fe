@@ -1,83 +1,44 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Footer } from '../../footer/footer';
-
-interface Product {
-  name: string;
-  fullPrice: string;
-  price: string;
-  discount: string;
-  img: string;
-  description?: string;
-  developer?: string;
-  publisher?: string;
-  releaseDate?: string;
-  genre?: string;
-  reviews?: number;
-  tags?: string[];
-  countryCompatibility?: string;
-  installation?: string;
-  platforms?: string[];
-}
+import { Product } from '../../models/product.model';
+import { CartService } from '../../services/cart';
+import { FormsModule } from '@angular/forms';
+import { ProductService } from '../../services/product';
 
 @Component({
   selector: 'app-productpage',
-  imports: [CommonModule, Footer],
+  imports: [CommonModule, Footer, RouterModule, FormsModule],
   templateUrl: './productpage.html',
   styleUrl: './productpage.css',
 })
 export class Productpage {
 
   product!: Product;
+  selectedQuantity = 1; 
 
-  products: Record<string, Product> = {
-    cyberpunk2077: {
-      name: 'Cyberpunk: Ultimate Edition',
-      price: '60.80 €',
-      fullPrice: '76.00 €',
-      discount: '-20%',
-      img: 'images/cyber.jpg',
-      description: 'Come governatore di Night City, plasmerai il destino dei tuoi cittadini e sfiderai rivali potenti. Scopri l\'esperienza top di Cyberpunk con combattimenti, hacking e narrativa immersiva.',
-      developer: 'CD Projekt Red',
-      publisher: 'CD Projekt',
-      releaseDate: '10 dicembre 2020',
-      genre: 'RPG, Azione, Open World',
-      reviews: 5000,
-      tags: ['RPG', 'Open World', 'Cyberpunk', 'Azione'],
-      countryCompatibility: 'Global',
-      installation: 'Steam o GOG Galaxy',
-      platforms: ['pc', 'playstation', 'xbox', 'switch']
-    },
-    superMarioOdissey: {
-      name: 'Super Mario Odyssey',
-      price: '49.90 €',
-      fullPrice: '55.50 €',
-      discount: '-10%',
-      img: 'images/mario2.png',
-      description: 'Un’avventura 3D con Mario che esplora regni incredibili con nuove abilità e il fedele Cappy.',
-      developer: 'Nintendo',
-      publisher: 'Nintendo',
-      releaseDate: '27 ottobre 2017',
-      genre: 'Platform',
-      reviews: 4500,
-      tags: ['Platform', 'Avventura', 'Family'],
-      countryCompatibility: 'Global',
-      installation: 'Console Nintendo Switch',
-      platforms: ['switch']
-    }
-  };
+  products: Record<string, Product> = {};
 
-  constructor(private route: ActivatedRoute) { }
+  currentImageIndex = 0;
+
+  constructor(
+    private route: ActivatedRoute,
+    private cartService: CartService,
+    private productService: ProductService
+  ) { }
 
   ngOnInit() {
+    this.products = this.productService.getProducts();
     const id = this.route.snapshot.paramMap.get('id') ?? '';
+
     this.product = this.products[id] ?? {
       name: 'Prodotto non trovato',
       price: '',
       fullPrice: '',
       discount: '',
       img: 'images/placeholder.jpg',
+      images: [],
       description: '',
       developer: '',
       publisher: '',
@@ -91,9 +52,7 @@ export class Productpage {
     };
   }
 
-
   getStars(reviews: number = 0): string[] {
-
     const starsCount = Math.min(5, Math.floor(reviews / 1000));
     const halfStar = (reviews % 1000 >= 500 && starsCount < 5) ? 1 : 0;
     const fullStars = Array(starsCount).fill('★');
@@ -102,4 +61,26 @@ export class Productpage {
     return [...fullStars, ...halfStars, ...emptyStars];
   }
 
+  addToCart() {
+    if (!this.product) return;
+
+    const quantity = Math.max(1, Math.floor(this.selectedQuantity));
+    this.cartService.addToCart(this.product, quantity);
+    alert(`${quantity} ${this.product.name} aggiunto${quantity > 1 ? 'i' : ''} al carrello!`);
+  }
+
+  get currentImage(): string {
+    if (!this.product.images || this.product.images.length === 0) return this.product.img;
+    return this.product.images[this.currentImageIndex];
+  }
+
+  nextImage() {
+    if (!this.product.images) return;
+    this.currentImageIndex = (this.currentImageIndex + 1) % this.product.images.length;
+  }
+
+  prevImage() {
+    if (!this.product.images) return;
+    this.currentImageIndex = (this.currentImageIndex - 1 + this.product.images.length) % this.product.images.length;
+  }
 }

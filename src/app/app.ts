@@ -18,8 +18,7 @@ export class App {
   constructor(private router: Router) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        // Nasconde il navbar su alcune rotte (modifica secondo necessità)
-        this.showNavbar = !['/login'].includes(event.urlAfterRedirects);
+        this.showNavbar = !['/login', '/register', '/checkout'].includes(event.urlAfterRedirects);
       }
     });
   }

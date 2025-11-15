@@ -1,0 +1,95 @@
+<div class="min-h-screen flex flex-col md:flex-row items-center justify-center bg-gray-900 p-4">
+
+    <div class="mb-6 md:mb-0 md:flex-1 flex items-center justify-center">
+        <a routerLink="/">
+            <img src="images/logo.png" alt="Logo" class="h-auto md:h-auto">
+        </a>
+    </div>
+
+    <!-- Box centrale checkout -->
+    <div class="flex-1 flex items-center justify-center w-full">
+        <div class="max-w-sm md:max-w-md w-full bg-gray-800 shadow-lg rounded-lg p-6 md:p-10">
+
+            <h1 class="text-2xl md:text-3xl font-bold mb-6 text-white text-center md:text-center">Checkout (Demo)</h1>
+
+            <p class="mb-4 text-gray-300 text-center">
+                Stai acquistando un prodotto DEMO. Nessun pagamento reale verrà effettuato.
+            </p>
+
+            <!-- BOX DATI DEMO -->
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded">
+                <h3 class="font-semibold text-blue-700 mb-2">📌 Dati per la Demo</h3>
+                <p><span class="font-medium">Numero carta:</span> {{ demoCard.number }}</p>
+                <p><span class="font-medium">Nome:</span> {{ demoCard.name }}</p>
+                <p><span class="font-medium">Scadenza:</span> {{ demoCard.exp }}</p>
+                <p><span class="font-medium">CVV:</span> {{ demoCard.cvv }}</p>
+            </div>
+
+            <!-- FORM -->
+            <form (ngSubmit)="acquista()" #payForm="ngForm" class="space-y-4">
+                <div>
+                    <label class="block text-gray-300 mb-1">Numero carta</label>
+                    <input type="text" [(ngModel)]="card.number" name="number" required
+                        class="w-full bg-gray-900 text-white border border-gray-700 p-3 md:p-4 rounded text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-blue-700" />
+                </div>
+
+                <div>
+                    <label class="block text-gray-300 mb-1">Nome sulla carta</label>
+                    <input type="text" [(ngModel)]="card.name" name="name" required
+                        class="w-full bg-gray-900 text-white border border-gray-700 p-3 md:p-4 rounded text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-blue-700" />
+                </div>
+
+                <div class="flex space-x-4">
+                    <div class="flex-1">
+                        <label class="block text-gray-300 mb-1">Scadenza</label>
+                        <input type="text" [(ngModel)]="card.exp" name="exp" placeholder="MM/YY" required
+                            class="w-full bg-gray-900 text-white border border-gray-700 p-3 md:p-4 rounded text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-blue-700" />
+                    </div>
+                    <div class="w-24">
+                        <label class="block text-gray-300 mb-1">CVV</label>
+                        <input type="password" [(ngModel)]="card.cvv" name="cvv" required
+                            class="w-full bg-gray-900 text-white border border-gray-700 p-3 md:p-4 rounded text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-blue-700" />
+                    </div>
+                </div>
+
+                <button type="submit" [disabled]="loading"
+                    class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-3 md:py-4 rounded mb-4 text-sm md:text-base transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                    {{ loading ? 'Elaborazione...' : 'ACQUISTA' }}
+                </button>
+            </form>
+
+            <p class="mt-4 text-center text-red-500 font-medium">{{ message }}</p>
+
+            <!-- BOX CODICI PRODOTTI SUCCESSO (verde) -->
+            <div *ngIf="orderCompleted" class="bg-green-50 border-l-4 border-green-600 p-4 mt-6 rounded">
+                <h3 class="font-semibold text-green-700 mb-2">Acquisto completato!</h3>
+
+                <p class="text-gray-700 mb-2">
+                    Qu{{ cartProducts.length === 1 ? 'esto è il codice del prodotto acquistato' : 'esti sono i codici
+                    dei prodotti acquistati' }}:
+                </p>
+
+                <ul>
+                    <li *ngFor="let item of cartProducts" class="mb-1">
+                        {{ item.name }}: <span class="font-mono">{{ showCode ? item.code : '••••-••••-••••' }}</span>
+                    </li>
+                </ul>
+
+                <div class="flex items-center space-x-3 mt-2">
+                    <button class="text-green-700 hover:text-green-900" (click)="toggleCode()">
+                        {{ showCode ? (cartProducts.length === 1 ? '🙈 Nascondi codice' : '🙈 Nascondi codici')
+                        : (cartProducts.length === 1 ? '👁️ Mostra codice' : '👁️ Mostra codici') }}
+                    </button>
+
+                    <button class="text-gray-700 hover:text-gray-900" (click)="copyCode()" [disabled]="!showCode">
+                        {{ cartProducts.length === 1 ? '📋 Copia codice' : '📋 Copia tutti i codici' }}
+                    </button>
+                </div>
+
+                <p *ngIf="copied" class="text-green-700 mt-2 text-sm">Codici copiati negli appunti!</p>
+            </div>
+
+        </div>
+    </div>
+
+</div>
