@@ -18,7 +18,8 @@ export class App {
   constructor(private router: Router) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.showNavbar = !['/login', '/register', '/checkout'].includes(event.urlAfterRedirects);
+        const path = event.urlAfterRedirects.split('?')[0]; // Ignora query params
+        this.showNavbar = !['/login', '/register', '/checkout'].includes(path);
       }
     });
   }

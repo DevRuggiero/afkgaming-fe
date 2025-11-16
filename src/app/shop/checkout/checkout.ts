@@ -22,6 +22,8 @@ export class Checkout implements OnInit {
   orderCompleted = false;
   showCode = false;
   copied = false;
+  singleProductCheckout = false;
+
 
   card = {
     number: '',
@@ -44,49 +46,56 @@ export class Checkout implements OnInit {
   ) { }
 
   ngOnInit() {
-    const queryParams = this.route.snapshot.queryParams;
-    const productId = queryParams['productId'];
-    const quantity = Number(queryParams['quantity'] || 1);
+  const queryParams = this.route.snapshot.queryParams;
+  const productId = queryParams['productId'];
+  const quantity = Number(queryParams['quantity'] || 1);
 
-    if (productId) {
-      const product = this.productService.getProductById(productId);
-      if (product) {
-        // Checkout temporaneo con solo questo prodotto
-        this.cartProducts = [{ ...product, code: this.generateCode(), quantity }];
-        return;
-      }
+  if (productId) {
+    const product = this.productService.getProductById(productId);
+    if (product) {
+      // Checkout temporaneo con solo questo prodotto
+      this.cartProducts = [{ ...product, code: this.generateCode(), quantity }];
+      this.singleProductCheckout = true; // <-- flag per acquisto singolo
+      return;
     }
-
-    // Se non ci sono query params, usa il carrello normale
-    this.cartProducts = this.cartService.getItems().map(p => ({
-      ...p,
-      code: this.generateCode()
-    }));
   }
+
+  // Se non ci sono query params, usa il carrello normale
+  this.cartProducts = this.cartService.getItems().map(p => ({
+    ...p,
+    code: this.generateCode()
+  }));
+  this.singleProductCheckout = false; // <-- flag per carrello normale
+}
+
 
   acquista() {
-    this.loading = true;
-    this.message = '';
-    this.orderCompleted = false;
+  this.loading = true;
+  this.message = '';
+  this.orderCompleted = false;
 
-    setTimeout(() => {
-      if (
-        this.card.number === this.demoCard.number &&
-        this.card.name === this.demoCard.name &&
-        this.card.exp === this.demoCard.exp &&
-        this.card.cvv === this.demoCard.cvv
-      ) {
-        this.orderCompleted = true;
-        this.message = '';
+  setTimeout(() => {
+    if (
+      this.card.number === this.demoCard.number &&
+      this.card.name === this.demoCard.name &&
+      this.card.exp === this.demoCard.exp &&
+      this.card.cvv === this.demoCard.cvv
+    ) {
+      this.orderCompleted = true;
+      this.message = '';
+
+      // Svuota il carrello solo se NON è acquisto singolo
+      if (!this.singleProductCheckout) {
         this.cartService.clearCart();
         localStorage.removeItem('cart');
-
-      } else {
-        this.message = 'Dati carta non validi (demo). Riprova.';
       }
-      this.loading = false;
-    }, 1000);
-  }
+
+    } else {
+      this.message = 'Dati carta non validi (demo). Riprova.';
+    }
+    this.loading = false;
+  }, 1000);
+}
 
   generateCode(): string {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
