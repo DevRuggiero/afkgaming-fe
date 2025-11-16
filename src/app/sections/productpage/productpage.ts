@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Footer } from '../../footer/footer';
 import { Product } from '../../models/product.model';
@@ -26,7 +26,8 @@ export class Productpage {
   constructor(
     private route: ActivatedRoute,
     private cartService: CartService,
-    private productService: ProductService
+    private productService: ProductService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -73,17 +74,17 @@ export class Productpage {
     this.cartService.addToCart(this.product, quantity);
 
     Swal.fire({
-      toast: true,               
+      toast: true,
       icon: 'success',
       title: `${quantity}× ${this.product.name} aggiunto al carrello`,
-      position: 'top',             
+      position: 'top',
 
       showConfirmButton: false,
-      timer: 4000,                 
+      timer: 4000,
       timerProgressBar: true,
 
-      background: '#0c1a3c',      
-      color: '#ffffff',            
+      background: '#0c1a3c',
+      color: '#ffffff',
 
       customClass: {
         popup: 'swal-custom-popup',
@@ -91,8 +92,6 @@ export class Productpage {
       }
     });
   }
-
-
 
   get currentImage(): string {
     if (!this.product.images || this.product.images.length === 0) return this.product.img;
@@ -107,5 +106,23 @@ export class Productpage {
   prevImage() {
     if (!this.product.images) return;
     this.currentImageIndex = (this.currentImageIndex - 1 + this.product.images.length) % this.product.images.length;
+  }
+
+
+  buyNow() {
+    if (!this.product) return;
+
+    const quantity = Math.max(1, Math.floor(this.selectedQuantity));
+
+    // Prendi l'ID del prodotto dalla chiave di ProductService
+    const productId = Object.entries(this.products)
+      .find(([key, prod]) => prod === this.product)?.[0];
+
+    if (!productId) return;
+
+    // Naviga al checkout con query params
+    this.router.navigate(['/checkout'], {
+      queryParams: { productId, quantity }
+    });
   }
 }

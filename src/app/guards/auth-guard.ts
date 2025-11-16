@@ -22,7 +22,6 @@ export class AuthGuard implements CanActivate {
 
     console.warn('AuthGuard: accesso negato - reindirizzo a /login');
 
-    // 🔹 SweetAlert2 toast top-center
     Swal.fire({
       toast: true,
       icon: 'warning',
@@ -31,8 +30,8 @@ export class AuthGuard implements CanActivate {
       showConfirmButton: false,
       timer: 3500,
       timerProgressBar: true,
-      background: '#0c1a3c',  // blue-900
-      color: '#ffffff',        // testo bianco
+      background: '#0c1a3c',
+      color: '#ffffff',
       customClass: {
         popup: 'swal-custom-popup',
         title: 'swal-title'

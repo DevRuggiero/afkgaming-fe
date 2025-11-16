@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { CartService } from '../../services/cart';
+import { ProductService } from '../../services/product';
 import { Product } from '../../models/product.model';
 
 @Component({
@@ -14,7 +15,7 @@ import { Product } from '../../models/product.model';
 })
 export class Checkout implements OnInit {
 
-  cartProducts: (Product & { code: string })[] = [];
+  cartProducts: (Product & { code: string; quantity?: number })[] = [];
 
   loading = false;
   message = '';
@@ -36,9 +37,27 @@ export class Checkout implements OnInit {
     cvv: '123'
   };
 
-  constructor(private cartService: CartService) { }
+  constructor(
+    private cartService: CartService,
+    private route: ActivatedRoute,
+    private productService: ProductService
+  ) { }
 
   ngOnInit() {
+    const queryParams = this.route.snapshot.queryParams;
+    const productId = queryParams['productId'];
+    const quantity = Number(queryParams['quantity'] || 1);
+
+    if (productId) {
+      const product = this.productService.getProductById(productId);
+      if (product) {
+        // Checkout temporaneo con solo questo prodotto
+        this.cartProducts = [{ ...product, code: this.generateCode(), quantity }];
+        return;
+      }
+    }
+
+    // Se non ci sono query params, usa il carrello normale
     this.cartProducts = this.cartService.getItems().map(p => ({
       ...p,
       code: this.generateCode()
@@ -60,6 +79,8 @@ export class Checkout implements OnInit {
         this.orderCompleted = true;
         this.message = '';
         this.cartService.clearCart();
+        localStorage.removeItem('cart');
+
       } else {
         this.message = 'Dati carta non validi (demo). Riprova.';
       }
@@ -89,5 +110,4 @@ export class Checkout implements OnInit {
       setTimeout(() => this.copied = false, 2000);
     });
   }
-
 }

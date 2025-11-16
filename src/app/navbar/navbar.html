@@ -18,10 +18,18 @@
   </div>
   <!-- Icone a destra -->
   <div *ngIf="!showSearch" class="absolute right-6 top-1/2 transform -translate-y-1/2 flex gap-x-6">
-    <button class="text-white text-2xl md:text-3xl cursor-pointer" routerLink="/login">
+
+    <!-- 🔹 Se non loggato: mostra icona login -->
+    <button *ngIf="!auth.isLogged()" class="text-white text-2xl md:text-3xl cursor-pointer" routerLink="/login">
       <i class="fa-solid fa-user"></i>
     </button>
 
+    <!-- 🔹 Se loggato: mostra icona logout -->
+    <button *ngIf="auth.isLogged()" class="text-white text-2xl md:text-3xl cursor-pointer" (click)="logout()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </button>
+
+    <!-- Carrello -->
     <button class="text-white text-2xl md:text-3xl relative cursor-pointer" (click)="toggleCart()">
       <i class="fa-solid fa-cart-shopping"></i>
       <span *ngIf="cartCount > 0" class="absolute -top-2 -right-2 bg-red-600 rounded-full px-2 text-sm">

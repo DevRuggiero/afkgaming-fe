@@ -25,7 +25,6 @@ export class Cartmodal {
     this.router.navigate(['/checkout']);
   }
 
-  // Restituisce la lista dei prodotti con quantità raggruppata
   getCartSummary() {
     const summary: { product: any; quantity: number }[] = [];
     const map = new Map<string, { product: any; quantity: number }>();

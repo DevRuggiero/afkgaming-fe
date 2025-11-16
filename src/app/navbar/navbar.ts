@@ -7,6 +7,8 @@ import { CartService } from '../services/cart';
 import { Cartmodal } from '../shop/cartmodal/cartmodal';
 import { Subscription } from 'rxjs';
 import { ProductService } from '../services/product';
+import { AuthService } from '../services/auth';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-navbar',
@@ -33,11 +35,12 @@ export class Navbar implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     public cart: CartService,
-    private productService: ProductService
+    private productService: ProductService,
+    public auth: AuthService
   ) { }
 
   ngOnInit() {
-    // Aggiorna il conteggio del carrello
+    // Aggiorna il conteggio del carrello (persistente)
     this.cartSub = this.cart.items$.subscribe(items => {
       this.cartCount = items.length;
     });
@@ -105,4 +108,26 @@ export class Navbar implements OnInit, OnDestroy {
   toggleCart() {
     this.showCart = !this.showCart;
   }
+
+
+
+  logout() {
+    this.auth.logout();
+    Swal.fire({
+      toast: true,
+      icon: 'success',
+      title: 'Disconnesso dalla demo',
+      position: 'top',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      background: '#0c1a3c',
+      color: '#ffffff',
+      customClass: {
+        popup: 'swal-custom-popup',
+        title: 'swal-title'
+      }
+    });
+  }
+
 }

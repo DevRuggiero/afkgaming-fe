@@ -11,6 +11,13 @@ export class AuthService {
 
   constructor() {
     console.log('AuthService inizializzato (modalità offline)');
+
+    // 🔹 Carica utente loggato dal localStorage
+    const savedUser = localStorage.getItem('loggedUser');
+    if (savedUser) {
+      this.loggedUser = JSON.parse(savedUser);
+      console.log('Utente loggato caricato da localStorage:', this.loggedUser);
+    }
   }
 
   login(email: string, password: string) {
@@ -28,6 +35,7 @@ export class AuthService {
     console.log('Login riuscito! Utente:', user);
 
     this.loggedUser = user;
+    localStorage.setItem('loggedUser', JSON.stringify(user));
 
     return { success: true, message: 'Login effettuato', user };
   }
@@ -35,6 +43,7 @@ export class AuthService {
   logout() {
     console.log('Logout eseguito. Utente precedente:', this.loggedUser);
     this.loggedUser = null;
+    localStorage.removeItem('loggedUser');
   }
 
   isLogged(): boolean {

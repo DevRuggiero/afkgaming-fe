@@ -7,25 +7,28 @@ export class CartService {
   private items: Product[] = [];
   public items$ = new BehaviorSubject<Product[]>([]);
 
-  constructor() { }
+  constructor() {
+    const data = localStorage.getItem('cart');
+    if (data) {
+      this.items = JSON.parse(data);
+      this.items$.next(this.items);
+    }
+  }
 
-  // Nel CartService
   addToCart(product: Product, quantity: number = 1) {
     for (let i = 0; i < quantity; i++) {
       this.items.push(product);
     }
     this.items$.next(this.items);
+    this.saveCart();
     console.log(`Aggiunti ${quantity} ${product.name} al carrello`);
     console.log('Carrello attuale:', this.items.map(p => p.name));
   }
 
-
-  // Restituisce gli items correnti
   getItems(): Product[] {
     return this.items;
   }
 
-  // Restituisce il totale
   getTotal(): number {
     const total = this.items.reduce((sum, p) => {
       const priceNum = parseFloat(p.price.replace('€', '').replace(',', '.').trim());
@@ -34,10 +37,14 @@ export class CartService {
     return Math.round(total * 100) / 100;
   }
 
-  // Svuota il carrello 
   clearCart() {
     this.items = [];
     this.items$.next(this.items);
+    localStorage.removeItem('cart'); 
     console.log('Carrello svuotato');
+  }
+
+  private saveCart() {
+    localStorage.setItem('cart', JSON.stringify(this.items));
   }
 }
