@@ -24,20 +24,31 @@ export class Navbar implements OnInit, OnDestroy {
 
   private cartSub!: Subscription;
 
+  /** 🔥 lista prodotti reali caricati dal ProductService */
+  allProducts: { id: string; name: string; img: string }[] = [];
+
+  /** risultati della ricerca */
   filteredProducts: any[] = [];
 
-  products = [
-    { id: 'cyberpunk2077', name: 'Cyberpunk 2077', img: 'images/cyberpunk.jpg' },
-    { id: 'superMarioOdissey', name: 'Super Mario Odyssey', img: 'images/SuperMarioOdissey.jpg' },
-    { id: 'haloInfinite', name: 'Halo: Campaign Evolved', img: 'images/halo-evolved.jpg' },
-  ];
-
-  constructor(private router: Router, public cart: CartService, private productService: ProductService) { }
+  constructor(
+    private router: Router,
+    public cart: CartService,
+    private productService: ProductService
+  ) { }
 
   ngOnInit() {
+    // Aggiorna il conteggio del carrello
     this.cartSub = this.cart.items$.subscribe(items => {
       this.cartCount = items.length;
     });
+
+    // 🔥 carica i prodotti dal service
+    const data = this.productService.getProducts();
+    this.allProducts = Object.entries(data).map(([id, p]) => ({
+      id,
+      name: p.name,
+      img: p.img
+    }));
   }
 
   ngOnDestroy() {
@@ -58,27 +69,27 @@ export class Navbar implements OnInit, OnDestroy {
     return this._searchText;
   }
 
+  /** 🔍 Filtra i prodotti */
   updateFilteredProducts() {
-    const query = this._searchText.trim().toLowerCase();
-    this.filteredProducts = query
-      ? this.products.filter(p => p.name.toLowerCase().includes(query))
+    const q = this._searchText.trim().toLowerCase();
+
+    this.filteredProducts = q
+      ? this.allProducts.filter(p => p.name.toLowerCase().includes(q))
       : [];
   }
 
+  /** 🔎 Ricerca premi invio */
   searchProducts() {
-    const allProducts = Object.entries(this.productService.getProducts())
-      .map(([id, product]) => ({ id, ...product }));
+    const q = this.searchText.toLowerCase();
 
-    const firstProduct = allProducts.find(p =>
-      p.name.toLowerCase().includes(this.searchText.toLowerCase()) // <--- usa searchText
+    const match = this.allProducts.find(p =>
+      p.name.toLowerCase().includes(q)
     );
 
-    if (firstProduct) {
-      this.router.navigate(['/product', firstProduct.id]);
-      this.closeSearch();
+    if (match) {
+      this.goToProduct(match.id);
     }
   }
-
 
   goToProduct(productId: string) {
     this.router.navigate(['/product', productId]);

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../services/auth';
+import Swal from 'sweetalert2';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
@@ -20,7 +21,23 @@ export class AuthGuard implements CanActivate {
     }
 
     console.warn('AuthGuard: accesso negato - reindirizzo a /login');
-    alert('Accesso protetto. Effettua il login (modalità offline).');
+
+    // 🔹 SweetAlert2 toast top-center
+    Swal.fire({
+      toast: true,
+      icon: 'warning',
+      title: 'Accesso protetto. Effettua il login (modalità offline).',
+      position: 'top',
+      showConfirmButton: false,
+      timer: 3500,
+      timerProgressBar: true,
+      background: '#0c1a3c',  // blue-900
+      color: '#ffffff',        // testo bianco
+      customClass: {
+        popup: 'swal-custom-popup',
+        title: 'swal-title'
+      }
+    });
 
     this.router.navigate(['/login']);
     return false;

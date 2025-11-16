@@ -6,6 +6,7 @@ import { Product } from '../../models/product.model';
 import { CartService } from '../../services/cart';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../services/product';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-productpage',
@@ -16,7 +17,7 @@ import { ProductService } from '../../services/product';
 export class Productpage {
 
   product!: Product;
-  selectedQuantity = 1; 
+  selectedQuantity = 1;
 
   products: Record<string, Product> = {};
 
@@ -29,28 +30,32 @@ export class Productpage {
   ) { }
 
   ngOnInit() {
-    this.products = this.productService.getProducts();
-    const id = this.route.snapshot.paramMap.get('id') ?? '';
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id') ?? '';
 
-    this.product = this.products[id] ?? {
-      name: 'Prodotto non trovato',
-      price: '',
-      fullPrice: '',
-      discount: '',
-      img: 'images/placeholder.jpg',
-      images: [],
-      description: '',
-      developer: '',
-      publisher: '',
-      releaseDate: '',
-      genre: '',
-      reviews: 0,
-      tags: [],
-      countryCompatibility: '',
-      installation: '',
-      platforms: []
-    };
+      this.product = this.productService.getProductById(id) ?? {
+        name: 'Prodotto non trovato',
+        price: '',
+        fullPrice: '',
+        discount: '',
+        img: 'images/placeholder.jpg',
+        images: [],
+        description: '',
+        developer: '',
+        publisher: '',
+        releaseDate: '',
+        genre: '',
+        reviews: 0,
+        tags: [],
+        countryCompatibility: '',
+        installation: '',
+        platforms: []
+      };
+
+      this.currentImageIndex = 0;
+    });
   }
+
 
   getStars(reviews: number = 0): string[] {
     const starsCount = Math.min(5, Math.floor(reviews / 1000));
@@ -66,8 +71,28 @@ export class Productpage {
 
     const quantity = Math.max(1, Math.floor(this.selectedQuantity));
     this.cartService.addToCart(this.product, quantity);
-    alert(`${quantity} ${this.product.name} aggiunto${quantity > 1 ? 'i' : ''} al carrello!`);
+
+    Swal.fire({
+      toast: true,               
+      icon: 'success',
+      title: `${quantity}× ${this.product.name} aggiunto al carrello`,
+      position: 'top',             
+
+      showConfirmButton: false,
+      timer: 4000,                 
+      timerProgressBar: true,
+
+      background: '#0c1a3c',      
+      color: '#ffffff',            
+
+      customClass: {
+        popup: 'swal-custom-popup',
+        title: 'swal-title'
+      }
+    });
   }
+
+
 
   get currentImage(): string {
     if (!this.product.images || this.product.images.length === 0) return this.product.img;
