@@ -21,10 +21,14 @@
         Svuota Carrello
       </button>
 
-      <button (click)="checkout()"
-        class="flex-1 bg-blue-900 hover:bg-blue-800 py-1.5 px-3 text-sm rounded-lg md:py-2 md:px-4 md:text-base cursor-pointer">
-        Procedi al Checkout
-      </button>
+      <button 
+  (click)="checkout()" 
+  [disabled]="cart.getItems().length === 0" 
+  [ngStyle]="{ cursor: cart.getItems().length === 0 ? 'not-allowed' : 'pointer' }"
+  class="flex-1 bg-blue-900 hover:bg-blue-800 py-1.5 px-3 text-sm rounded-lg md:py-2 md:px-4 md:text-base">
+  Procedi al Checkout
+</button>
+
     </div>
 
     <button (click)="close.emit()"

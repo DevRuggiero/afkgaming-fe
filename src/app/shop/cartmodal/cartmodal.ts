@@ -20,6 +20,11 @@ export class Cartmodal {
     this.cart.clearCart();
   }
 
+  get isCartEmpty(): boolean {
+    return this.cart.getItems().length === 0;
+  }
+
+
   checkout() {
     this.close.emit();
     this.router.navigate(['/checkout']);
