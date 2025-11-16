@@ -8,6 +8,7 @@ export class AuthService {
   ];
 
   private loggedUser: any = null;
+  private lastLoggedState: boolean | null = null;
 
   constructor() {
     console.log('AuthService inizializzato (modalità offline)');
@@ -47,8 +48,12 @@ export class AuthService {
   }
 
   isLogged(): boolean {
-    console.log('isLogged()? ->', this.loggedUser !== null);
-    return this.loggedUser !== null;
+    const state = this.loggedUser !== null;
+    if (state !== this.lastLoggedState) {
+      console.log('isLogged()? ->', state);
+      this.lastLoggedState = state;
+    }
+    return state;
   }
 
   getLoggedUser() {

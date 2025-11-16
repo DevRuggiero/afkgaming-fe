@@ -7,6 +7,7 @@ import { CartService } from '../../services/cart';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../services/product';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-productpage',
@@ -27,7 +28,8 @@ export class Productpage {
     private route: ActivatedRoute,
     private cartService: CartService,
     private productService: ProductService,
-    private router: Router
+    private router: Router,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
@@ -112,15 +114,35 @@ export class Productpage {
   buyNow() {
     if (!this.product) return;
 
+    if (!this.auth.isLogged()) {
+      Swal.fire({
+        toast: true,
+        icon: 'warning',
+        title: 'Devi fare il login per procedere all\'acquisto',
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3500,
+        timerProgressBar: true,
+        background: '#0c1a3c',
+        color: '#ffffff'
+      });
+
+      this.router.navigate(['/login']);
+      return;
+    }
+
     const quantity = Math.max(1, Math.floor(this.selectedQuantity));
 
-    // Prendi l'ID del prodotto dalla chiave di ProductService
-    const productId = Object.entries(this.products)
-      .find(([key, prod]) => prod === this.product)?.[0];
+    // Usa direttamente i prodotti dal service
+    const products = this.productService.getProducts();
+    const productId = Object.entries(products)
+      .find(([id, prod]) => prod.name === this.product.name)?.[0];
 
-    if (!productId) return;
+    if (!productId) {
+      console.error('Impossibile trovare l\'ID del prodotto');
+      return;
+    }
 
-    // Naviga al checkout con query params
     this.router.navigate(['/checkout'], {
       queryParams: { productId, quantity }
     });
