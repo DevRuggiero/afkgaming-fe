@@ -10,39 +10,48 @@
     </a>
   </div>
 
-  <!-- Icona di ricerca al centro -->
-  <div *ngIf="!showSearch" class="absolute left-1/2 transform -translate-x-1/2">
-    <button (click)="showSearch = true" class="text-white text-2xl md:text-3xl cursor-pointer">
+  <!-- Icone a destra + search -->
+  <div *ngIf="!showSearch" class="absolute right-6 top-1/2 transform -translate-y-1/2 flex gap-x-6 items-center">
+
+    <!-- 🔹 Icona di ricerca -->
+    <button (click)="showSearch = true" class="text-white text-xl md:text-2xl lg:text-3xl cursor-pointer">
       <i class="fa-solid fa-magnifying-glass"></i>
     </button>
-  </div>
-  <!-- Icone a destra -->
-  <div *ngIf="!showSearch" class="absolute right-6 top-1/2 transform -translate-y-1/2 flex gap-x-6">
 
-    <!-- 🔹 Se non loggato: mostra icona login -->
-    <button *ngIf="!auth.isLogged()" class="text-white text-2xl md:text-3xl cursor-pointer" routerLink="/login">
+    <!-- 🔹 Se non loggato: icona login -->
+    <button *ngIf="!auth.isLogged()" routerLink="/login"
+      class="text-white text-xl md:text-2xl lg:text-3xl cursor-pointer">
       <i class="fa-solid fa-user"></i>
     </button>
 
-    <!-- 🔹 Se loggato: mostra icona logout -->
-    <button *ngIf="auth.isLogged()" class="text-white text-2xl md:text-3xl cursor-pointer" (click)="logout()">
-      <i class="fa-solid fa-right-from-bracket"></i>
+    <button *ngIf="auth.isLogged()" class="text-white text-xl md:text-2xl lg:text-3xl cursor-pointer"
+      (click)="toggleCodesModal()">
+      <i class="fa-solid fa-tags"></i>
     </button>
-
-    <!-- Carrello -->
-    <button class="text-white text-2xl md:text-3xl relative cursor-pointer" (click)="toggleCart()">
+    <button class="text-white text-xl md:text-2xl lg:text-3xl relative cursor-pointer" (click)="toggleCart()">
       <i class="fa-solid fa-cart-shopping"></i>
+
       <span *ngIf="cartCount > 0" class="absolute -top-2 -right-2 bg-red-600 rounded-full px-2 text-sm">
         {{ cartCount }}
       </span>
     </button>
-
+    <button *ngIf="auth.isLogged()" class="text-white text-xl md:text-2xl lg:text-3xl cursor-pointer"
+      (click)="logout()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </button>
   </div>
+
+
+  <div class="hidden md:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+    <span class="text-white italic text-base md:text-lg lg:text-xl">
+      Non conta quanto tempo hai, ma come lo usi ~ Ekko
+    </span>
+  </div>
+
   <div class="absolute inset-0 flex items-center justify-center z-50 p-4 transition-all duration-300"
     [ngClass]="showSearch ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'">
     <div class="relative w-full max-w-md">
 
-      <!-- Input di ricerca -->
       <input type="text" [(ngModel)]="searchText" placeholder=" Minecraft, Halo ..."
         class="w-full p-4 pr-12 text-white rounded-md focus:outline-none bg-blue-500 transition-all duration-300"
         (keydown.enter)="searchProducts()" />
@@ -60,7 +69,6 @@
         <i class="fa-solid fa-xmark"></i>
       </button>
 
-      <!-- Lista risultati live -->
       <div *ngIf="filteredProducts.length > 0"
         class="absolute top-full mt-2 w-full bg-gray-800 rounded-md shadow-lg max-h-80 overflow-y-auto z-50">
         <div *ngFor="let product of filteredProducts" (click)="goToProduct(product.id)"
@@ -105,7 +113,45 @@
     </div>
   </div>
 
+  <div *ngIf="codesModal" class="fixed inset-0 flex justify-center items-center z-50 bg-black/50 px-2 md:px-0"
+    (click)="toggleCodesModal()">
 
-  <!-- Cart Modal -->
+    <div
+      class="bg-gray-900 text-white rounded-2xl shadow-xl w-full md:w-[32rem] p-4 md:p-6 relative max-h-[80vh] overflow-y-auto"
+      (click)="$event.stopPropagation()">
+
+      <!-- Titolo -->
+      <h2 class="text-2xl font-bold mb-4 text-blue-900">I tuoi codici</h2>
+
+      <!-- Nessun prodotto acquistato -->
+      <div *ngIf="purchasedCodes.length === 0" class="text-gray-300">
+        Nessun prodotto acquistato.
+      </div>
+
+      <!-- Lista codici con scroll su mobile se troppi -->
+      <ul class="mb-4 space-y-2 max-h-64 overflow-y-auto px-3" *ngIf="purchasedCodes.length > 0">
+        <li *ngFor="let item of purchasedCodes"
+          class="border-b border-gray-700 pb-2 flex flex-col md:flex-row md:justify-between md:items-center">
+
+          <!-- Nome prodotto -->
+          <div
+            class="font-semibold text-white break-words md:whitespace-nowrap md:truncate md:overflow-hidden mb-1 md:mb-0">
+            {{ item.name }}
+          </div>
+
+          <!-- Codice prodotto -->
+          <div class="font-mono text-white text-sm md:ml-4">{{ item.code }}</div>
+        </li>
+      </ul>
+
+      <!-- Pulsante chiudi -->
+      <button (click)="toggleCodesModal()"
+        class="absolute top-3 right-3 text-white text-xl md:text-2xl font-bold cursor-pointer md:text-red-500">
+        &times;
+      </button>
+
+    </div>
+  </div>
+
   <app-cartmodal *ngIf="showCart" (close)="showCart = false"></app-cartmodal>
 </div>

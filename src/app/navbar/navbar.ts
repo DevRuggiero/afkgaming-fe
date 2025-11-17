@@ -24,6 +24,9 @@ export class Navbar implements OnInit, OnDestroy {
   showCart = false;
   cartCount = 0;
 
+  codesModal = false;
+  purchasedCodes: { name: string; code: string }[] = [];
+
   private cartSub!: Subscription;
 
   /** 🔥 lista prodotti reali caricati dal ProductService */
@@ -112,7 +115,14 @@ export class Navbar implements OnInit, OnDestroy {
 
 
   logout() {
+
+    // Cancella i codici salvati
+    localStorage.removeItem("purchasedCodes");
+
+    // Logout utente
     this.auth.logout();
+
+    // Swal
     Swal.fire({
       toast: true,
       icon: 'success',
@@ -128,6 +138,15 @@ export class Navbar implements OnInit, OnDestroy {
         title: 'swal-title'
       }
     });
+  }
+
+  toggleCodesModal() {
+    if (!this.codesModal) {
+      // Apri: carica dati
+      const data = localStorage.getItem("purchasedCodes");
+      this.purchasedCodes = data ? JSON.parse(data) : [];
+    }
+    this.codesModal = !this.codesModal;
   }
 
 }

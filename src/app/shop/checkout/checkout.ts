@@ -69,7 +69,7 @@ export class Checkout implements OnInit {
 }
 
 
-  acquista() {
+ acquista() {
   this.loading = true;
   this.message = '';
   this.orderCompleted = false;
@@ -84,6 +84,19 @@ export class Checkout implements OnInit {
       this.orderCompleted = true;
       this.message = '';
 
+      // 🔹 Salvataggio prodotti acquistati nel localStorage
+      const saved = JSON.parse(localStorage.getItem("purchasedCodes") || "[]");
+      console.log('Prodotti già salvati:', saved);
+
+      const newItems = this.cartProducts.map(p => ({
+        name: p.name,
+        code: p.code
+      }));
+      console.log('Nuovi prodotti da salvare:', newItems);
+
+      localStorage.setItem("purchasedCodes", JSON.stringify([...saved, ...newItems]));
+      console.log('LocalStorage aggiornato:', localStorage.getItem("purchasedCodes"));
+
       // Svuota il carrello solo se NON è acquisto singolo
       if (!this.singleProductCheckout) {
         this.cartService.clearCart();
@@ -92,10 +105,12 @@ export class Checkout implements OnInit {
 
     } else {
       this.message = 'Dati carta non validi (demo). Riprova.';
+      console.log('Carta non valida:', this.card);
     }
     this.loading = false;
   }, 1000);
 }
+
 
   generateCode(): string {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
