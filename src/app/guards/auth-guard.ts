@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from '../services/auth';
 import Swal from 'sweetalert2';
 
@@ -10,10 +10,11 @@ export class AuthGuard implements CanActivate {
     console.log('AuthGuard inizializzato (modalità demo/offline)');
   }
 
-  canActivate(): boolean {
-    console.log('AuthGuard: canActivate chiamato');
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const logged = this.auth.isLogged();
+    console.log('AuthGuard: canActivate chiamato');
     console.log('AuthGuard: utente loggato?', logged);
+    console.log('AuthGuard: stato.url ->', state.url);
 
     if (logged) {
       console.log('AuthGuard: accesso consentito');
@@ -38,7 +39,8 @@ export class AuthGuard implements CanActivate {
       }
     });
 
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'], { queryParams: { redirectUrl: state.url } });
+    console.log('AuthGuard: navigate a /login con redirectUrl ->', state.url);
     return false;
   }
 }

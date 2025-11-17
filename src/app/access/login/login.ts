@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -17,16 +17,26 @@ export class Login {
   message = '';
   showPassword = false;
 
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) { }
 
   login() {
+    console.log('LoginComponent: login() chiamato');
+    console.log('LoginComponent: queryParams ricevuti ->', this.route.snapshot.queryParams);
+
     const res = this.auth.login(this.email, this.password);
 
     if (!res.success) {
+      console.log('LoginComponent: login fallito');
       this.message = res.message;
       return;
     }
-    this.message = 'Accesso effettuato in modalità demo!';
-    this.router.navigate(['/']);
+
+    console.log('LoginComponent: login riuscito, utente ->', res.user);
+
+    const redirectUrl = this.route.snapshot.queryParams['redirectUrl'] || '/';
+    console.log('LoginComponent: redirectUrl ->', redirectUrl);
+
+    this.router.navigateByUrl(redirectUrl);
   }
+
 }
