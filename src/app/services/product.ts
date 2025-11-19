@@ -46,7 +46,7 @@ export class ProductService {
     },
 
     haloCampaignEvolved: {
-      name: 'Halo: Combat Evolved',
+      name: 'Halo: Campaign Evolved',
       price: '56.90 €',
       fullPrice: '71.12 €',
       discount: '-20%',
